@@ -7,7 +7,7 @@ At the heart of CD is the *build system*, i.e., the scripts, specifications, and
 
 In our research, we analyze the dark side of CD—the overhead that build systems introduces on development and release teams, and their infrastructure—with a particular focus on how the overhead can be mitigated.
 
-# Build Systems Require Maintenance!
+## Build Systems Require Maintenance!
 
 [Really](https://e-reports-ext.llnl.gov/pdf/244668.pdf "Kumfert and Epperly, Software in the DOE: The Hidden Overhead of 'The Build'"), [they](http://people.cs.vt.edu/~jiaoyang/paper/esem11.pdf "Hochstein and Jiao, The cost of the build tax in scientific software") [do](http://hera.ugr.es/doi/16515080.pdf "Robles et al., Beyond source code: The importance of other artifacts in software development (a case study)"). While that statement may seem obvious, I'm just making sure that we are on the same page. CD does not come for free. Indeed, our prior work shows that up to 27% of source code changes (and 44% of test code changes) are [accompanied by changes to the build system](http://shanemcintosh.org/2011/05/21/an-empirical-study-of-build-maintenance-effort.html "McIntosh et al., "An Empirical Study of Build Maintenance Effort").
 
@@ -17,22 +17,26 @@ Surprisingly, the answer is *no*. In fact, our analyses of a large sample of ope
 
 On the other hand, we observed that there are open source projects that keep maintenance activity and cloning rates much lower than their counterparts. A deeper analysis of these projects revealed a couple of commonly-adopted patterns of creative build system abstraction.
 
-## Pattern 1: XML Entity Expansion
+### Pattern 1: XML Entity Expansion
+
+Rather than duplicating repetitive XML in their `build.xml` files, creative build engineers store common logic in a single file, and load it as a macro using the following snippet:
 
 ```xml
 <!-- Define references to files containing common targets -->
 <!DOCTYPE project [
   <!ENTITY modules-common SYSTEM "../modules-common.ent">
 ]>
-...
+```
+
+Later, the macro can be expanded in various locations:
+
+```xml
 <project name="bea" default="all">
   <!-- Include the file containing common targets. -->
   &modules-common;
 </project>
 ```
 
-## Pattern 2: On-the-fly Build Spec Generation
+### Pattern 2: On-the-fly Build Spec Generation
 
-# Slow Builds are Frustrating!
-
-# Builds Consume Computational Resources
+Although less egregious, copy-pasting is still quite a frequently occurring phenomenon in the build systems of C/C++ projects. We observed that the studied C/C++ systems with a low rates of copy-pasting avoid duplication by filling in template build specs during an initial step of the build process. This also helps to keep build maintenance activity localized, avoiding painful duplicate effort when maintenance is required.
