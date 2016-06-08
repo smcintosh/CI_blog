@@ -9,7 +9,7 @@ In our research, we analyze the dark side of CD—the overhead that build system
 
 ## Build Systems Require Maintenance!
 
-[Really](https://e-reports-ext.llnl.gov/pdf/244668.pdf "Kumfert and Epperly, Software in the DOE: The Hidden Overhead of 'The Build'"), [they](http://people.cs.vt.edu/~jiaoyang/paper/esem11.pdf "Hochstein and Jiao, The cost of the build tax in scientific software") [do](http://hera.ugr.es/doi/16515080.pdf "Robles et al., Beyond source code: The importance of other artifacts in software development (a case study)"). While that statement may seem obvious, I'm just making sure that we are on the same page. CD does not come for free. Indeed, our prior work shows that up to 27% of source code changes (and 44% of test code changes) are [accompanied by changes to the build system](http://shanemcintosh.org/2011/05/21/an-empirical-study-of-build-maintenance-effort.html "McIntosh et al., "An Empirical Study of Build Maintenance Effort").
+[Really](https://e-reports-ext.llnl.gov/pdf/244668.pdf "Kumfert and Epperly, Software in the DOE: The Hidden Overhead of 'The Build'"), [they](http://people.cs.vt.edu/~jiaoyang/paper/esem11.pdf "Hochstein and Jiao, The cost of the build tax in scientific software") [do](http://hera.ugr.es/doi/16515080.pdf "Robles et al., Beyond source code: The importance of other artifacts in software development (a case study)"). While that statement may seem obvious to some, it's important that we're on the same page here. _CD does not come for free._ Indeed, our prior work shows that up to 27% of source code changes (and 44% of test code changes) are [accompanied by changes to the build system](http://shanemcintosh.org/2011/05/21/an-empirical-study-of-build-maintenance-effort.html "McIntosh et al., "An Empirical Study of Build Maintenance Effort").
 
 In recent work, we asked ourselves "what can be done to mitigate build maintenance overhead?" We began by analyzing the impact of build technology choice. For example, do projects that adopt more modern build technologies like [Maven](https://maven.apache.org/) incur less maintenance activity than projects that adopt older build technologies like [Ant](https://ant.apache.org/)?
 
@@ -39,4 +39,10 @@ Later, the macro can be expanded in various locations:
 
 ### Pattern 2: On-the-fly Build Spec Generation
 
-Although less egregious, copy-pasting is still quite a frequently occurring phenomenon in the build systems of C/C++ projects. We observed that the studied C/C++ systems with a low rates of copy-pasting avoid duplication by filling in template build specs during an initial step of the build process. This also helps to keep build maintenance activity localized, avoiding painful duplicate effort when maintenance is required.
+Although less egregious, copy-pasting is still quite a frequently occurring phenomenon in the build systems of C/C++ projects. In our work, we have observed that the studied C/C++ systems with a low rates of copy-pasting avoid duplication by [filling in template build specs](http://shanemcintosh.org/2014/05/31/collecting-and-leveraging-a-benchmark-of-build-system-clones-to-aid-in-quality-assessments.html "McIntosh et al., Collecting and Leveraging a Benchmark of Build System Clones to Aid in Quality Assessments") during an initial step of the build process. This also helps to keep build maintenance activity localized, avoiding painful duplicate effort when maintenance is required.
+
+# Conclusions
+
+To keep up with the pace of modern software development, a robust and reliable build system is required. While recent advances have been made, build systems still require a considerable investment.
+
+In our research, we evaluate means of reducing the overhead that's introduced by the build system. In this blog, I've presented two interesting patterns that we observed in the build systems of projects that have low build maintenance activity. More detail can be found in [our papers](http://shanemcintosh.org/tags/build-systems.html "Build-related research papers").
